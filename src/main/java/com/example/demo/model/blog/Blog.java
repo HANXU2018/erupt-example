@@ -1,7 +1,9 @@
 package com.example.demo.model.blog;
 
+import org.hibernate.annotations.SQLDelete;
 import xyz.erupt.annotation.Erupt;
 import xyz.erupt.annotation.EruptField;
+import xyz.erupt.annotation.sub_erupt.Filter;
 import xyz.erupt.annotation.sub_erupt.LinkTree;
 import xyz.erupt.annotation.sub_field.Edit;
 import xyz.erupt.annotation.sub_field.EditType;
@@ -21,9 +23,11 @@ import javax.persistence.Table;
  */
 @Erupt(
         name = "博客管理",
-        linkTree = @LinkTree(field = "blogCategory")
+        linkTree = @LinkTree(field = "blogCategory"),
+        filter = @Filter("deleted = 0")
 )
 @Table(name = "blog_article")
+@SQLDelete(sql="update blog_article set deleted = 1, deleteTime = now() where id = ?")
 @Entity
 public class Blog extends HyperModel {
 
@@ -81,7 +85,7 @@ public class Blog extends HyperModel {
 
     @EruptField(
             views = @View(title = "标签", template = "value&&value.replace(/\\|/g,'<span class=\"text-red\"> | </span>')"),
-            edit = @Edit(title = "标签", notNull = true, type = EditType.TAGS,
+            edit = @Edit(title = "标签", notNull = true, type = EditType.TAGS, search = @Search,
                     tagsType = @TagsType(fetchHandler = BlogTagHandler.class)
             )
     )
@@ -90,7 +94,7 @@ public class Blog extends HyperModel {
     @Lob //文章内容较多定义为大文本类型
     @EruptField(
             views = @View(title = "内容", type = ViewType.HTML),
-            edit = @Edit(title = "内容", notNull = true, type = EditType.HTML_EDITOR)
+            edit = @Edit(title = "内容", notNull = true, type = EditType.CODE_EDITOR)
     )
     private String content;
 

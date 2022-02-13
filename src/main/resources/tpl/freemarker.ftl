@@ -57,15 +57,23 @@
         <!--<h1 style="padding-left:10px;text-align: center">-->
         <!--<span style="font-size: 2em">Use Erupt tpl draw</span>-->
         <!--</h1>-->
+
+
         <#list map?keys as key>
             <div class="card">
                 <div class="item">
                     <p class="title" style="background: ${color[key_index]}">${key}</p>
+                    ${key_index}
                     <p style="text-align: center;font-size: 2.2em;color: ${color[key_index]}">${map[key]}</p>
                 </div>
             </div>
+
+
         </#list>
     </div>
+
+
+    <#include "./footer.html">
 </div>
 </body>
 </html>

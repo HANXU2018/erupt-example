@@ -4,13 +4,15 @@
         margin: 0;
     }
 </style>
-<div class="card" style="padding: 16px">
-    <table border="border" style="border: 1px;width: 100%">
+<div>
+    <#-- title 为 bindTplData 返回的绑定数据 -->
+    <h1 align="center">${title}</h1>
+    <table border="1" cellpadding="0" style="width: 100%">
         <#list rows as row>
             <tr>
                 <td>${row.id}</td>
-                <td style="background: #09f">${row.choice!''}</td>
-                <td>${row.code!''}</td>
+                <td style="background: #09f;color: #fff">${row.name}</td>
+                <td>${row.number}</td>
             </tr>
         </#list>
     </table>
